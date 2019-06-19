@@ -25,6 +25,7 @@ import com.hardwork.fg607.relaxfinger.service.FloatService;
 import com.hardwork.fg607.relaxfinger.utils.AppUtils;
 import com.hardwork.fg607.relaxfinger.model.Config;
 import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
+import com.hardwork.fg607.relaxfinger.utils.LogUtil;
 import com.hardwork.fg607.relaxfinger.view.AppSettingFragment;
 import com.hardwork.fg607.relaxfinger.view.GestureFragment;
 import com.hardwork.fg607.relaxfinger.view.HideSettingFragment;
@@ -68,70 +69,28 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mPreferences = FloatingBallUtils.getMultiProcessPreferences();
-
         setContentView(R.layout.activity_setting);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mFab = (FloatingActionButton) findViewById(R.id.fab);
-
         mFab.hide();
-
         initFragments();
-
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment, mSettingFragment).addToBackStack(null).commit();
-
         SettingActivity.this.setTitle(R.string.title_activity_setting);
-
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        checkUpgrade();
-
-
-       /* if(isServiceRunning()){
-
-            bindFloatService();
-        }*/
-
         if(mAppSettingFragment != null){
-
             mAppSettingFragment.hideFuncDialog();
         }
-
-    }
-
-    public void bindFloatService(){
-
-        if(!mBound){
-
-            bindService(new Intent(this,FloatService.class),mServiceConnection, Context.BIND_AUTO_CREATE);
-        }
-
-    }
-
-    public void unbindFloatService(){
-
-        if(mBound){
-
-            unbindService(mServiceConnection);
-
-            mBound = false;
-            sMessenger = null;
-        }
-
     }
 
     public void startFloatService() {
-
         Intent intent = new Intent();
         intent.setClass(this, FloatService.class);
         intent.putExtra("what", Config.FLOAT_SWITCH);
@@ -140,14 +99,12 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     public void stopFloatService() {
-
         Intent intent = new Intent();
         intent.setClass(this, FloatService.class);
         intent.putExtra("what", Config.FLOAT_SWITCH);
         intent.putExtra("ballstate", false);
         startService(intent);
     }
-
 
     private void initFragments() {
 
@@ -156,30 +113,22 @@ public class SettingActivity extends AppCompatActivity {
         mSettingFragment.setGestureSettingClickListener(new SettingFragment.OnSettingClickListener() {
             @Override
             public void onGestureSettingClick() {
-
                 showGestureSetting();
-
             }
 
             @Override
             public void onAppSettingClick() {
-
                 showAppSetting();
-
-
             }
 
             @Override
             public void onNotifySettingClick() {
-
                 showNotifySetting();
             }
 
             @Override
             public void onHideSettingClick() {
-
                 showHideSetting();
-
             }
         });
 
@@ -259,8 +208,6 @@ public class SettingActivity extends AppCompatActivity {
     private void showHideSetting(){
 
         if (mHideSettingFragment == null) {
-
-
             mHideSettingFragment = new HideSettingFragment();
 
         }
@@ -281,6 +228,10 @@ public class SettingActivity extends AppCompatActivity {
         showFab();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
     @Override
     public void onBackPressed() {
@@ -476,16 +427,7 @@ public class SettingActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        unbindFloatService();
-    }
-
     private void saveExit(){
-
-        unbindFloatService();
         stopFloatService();
         finish();
     }

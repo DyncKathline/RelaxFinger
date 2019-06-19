@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.hardwork.fg607.relaxfinger.MyApplication;
 import com.hardwork.fg607.relaxfinger.utils.DensityUtil;
 import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
+import com.hardwork.fg607.relaxfinger.utils.LogUtil;
 
 /**
  * Created by fg607 on 16-12-3.
@@ -74,10 +75,9 @@ public class HideAreaView extends TextView {
                 MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
+                        LogUtil.e("removeViewImmediate-----");
                         FloatingBallUtils.getWindowManager().removeViewImmediate(mParentLayout);
                         mParentLayout.removeView(HideAreaView.this);
-
                     }
 
                 },50);
@@ -110,7 +110,7 @@ public class HideAreaView extends TextView {
 
         }else {
 
-            mWinLayoutParams.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
+            mWinLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
         }
 
         mWinLayoutParams.flags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE

@@ -21,6 +21,7 @@ import com.hardwork.fg607.relaxfinger.adapter.MenuFolderAdapter;
 import com.hardwork.fg607.relaxfinger.model.MenuDataSugar;
 import com.hardwork.fg607.relaxfinger.utils.DensityUtil;
 import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
+import com.hardwork.fg607.relaxfinger.utils.LogUtil;
 
 import java.util.List;
 
@@ -94,6 +95,7 @@ public class FolderViewProxy {
                         @Override
                         public void run() {
 
+                            LogUtil.e("removeViewImmediate-----");
                             FloatingBallUtils.getWindowManager().removeViewImmediate(mFolderView);
 
                             int count = mGridView.getChildCount();
@@ -144,7 +146,7 @@ public class FolderViewProxy {
 
         }else {
 
-            mWinLayoutParams.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
+            mWinLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
         }
 
 

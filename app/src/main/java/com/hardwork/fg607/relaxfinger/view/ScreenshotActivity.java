@@ -64,52 +64,37 @@ public class ScreenshotActivity extends Activity {
     };
 
     public void bindFloatService(){
-
         if(!mBound){
-
             bindService(new Intent(this,FloatService.class),mServiceConnection, Context.BIND_AUTO_CREATE);
         }
-
     }
 
     public void unbindFloatService(){
-
         if(mBound){
-
             unbindService(mServiceConnection);
-
             mBound = false;
             mMessenger = null;
         }
-
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         verifyStoragePermissions(ScreenshotActivity.this);
-
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
-
             bindFloatService();
             takeScreenshot();
 
         }else {
-
             Toast.makeText(this,"当前系统不支持快捷截屏!",Toast.LENGTH_SHORT).show();
-
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
                     finish();
                 }
             },500);
         }
-
-
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -129,64 +114,41 @@ public class ScreenshotActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if(requestCode == REQUEST_MEDIA_PROJECTION) {
             if (resultCode == RESULT_OK) {
-                
                     Screenshotter.getInstance()
                             .takeScreenshot(this, resultCode, data, new ScreenshotCallback() {
                                 @Override
                                 public void onScreenshot(Bitmap bitmap) {
-
                                     if(!mIsExist){
-
                                         sendMsg(Config.HIDE_BALL, "hide", false);
-
                                         if(mMessenger != null){
-
                                             Message message = Message.obtain();
                                             message.what = Config.SCREEN_SHOT;
                                             Bundle bundle = new Bundle();
                                             bundle.putParcelable("screenShot",bitmap);
                                             message.setData(bundle);
-
                                             try {
-
                                                 mMessenger.send(message);
-
                                                 Toast.makeText(ScreenshotActivity.this, "截图成功！", Toast.LENGTH_SHORT).show();
-
                                             } catch (RemoteException e) {
                                                 e.printStackTrace();
                                                 Toast.makeText(ScreenshotActivity.this, "截图失败！", Toast.LENGTH_SHORT).show();
                                             }
-
-
                                         }else {
-
                                             Toast.makeText(ScreenshotActivity.this, "截图失败！", Toast.LENGTH_SHORT).show();
                                         }
-
-
                                         mIsExist = true;
                                     }
-
                                     mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mOriginVolume, 0);
-
                                     if (mShootMP != null){
-
                                         mShootMP.release();
                                     }
-
                                     unbindFloatService();
-
                                     finish();
-
                                 }
                             });
-
                 }
-
             } else {
                 Toast.makeText(this, "You denied the permission.", Toast.LENGTH_SHORT).show();
             }
@@ -210,7 +172,6 @@ public class ScreenshotActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-
         moveTaskToBack(false);
 
     }
@@ -218,33 +179,22 @@ public class ScreenshotActivity extends Activity {
     /**
      *   播放截图声音
      */
-    public void shootSound()
-    {
-
+    public void shootSound() {
         if(mAudioManager ==null){
             mAudioManager= (AudioManager)getSystemService(Context.AUDIO_SERVICE);
             mOriginVolume = mAudioManager.getStreamVolume( AudioManager.STREAM_MUSIC);
         }
-
-
-
         int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(maxVolume/3), 0);
-
-        if (mOriginVolume != 0)
-        {
-
+        if (mOriginVolume != 0) {
              mShootMP = MediaPlayer.create(this, Uri.parse("file:///system/media/audio/ui/camera_click.ogg"));
-
             if (mShootMP != null){
-
                 mShootMP.start();
             }
-
         }
     }
 
-    public  void sendMsg(int what,String name,boolean action) {
+    public void sendMsg(int what,String name,boolean action) {
         Intent intent = new Intent();
         intent.putExtra("what",what);
         intent.putExtra(name, action);

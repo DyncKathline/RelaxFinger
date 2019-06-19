@@ -136,13 +136,11 @@ public class FloatingBallUtils {
 
 
     public static void keyBack(AccessibilityService service){
-
         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
     }
 
 
     public static void keyHome(){
-
         Intent i = new Intent(Intent.ACTION_MAIN);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 如果是服务里调用，必须加入new task标识
         i.addCategory(Intent.CATEGORY_HOME);
@@ -172,10 +170,7 @@ public class FloatingBallUtils {
 
 
     public static void openRecnetTask(AccessibilityService service){
-
         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
-
-
     }
 
     public static void openNotificationBar(AccessibilityService service){
@@ -247,14 +242,10 @@ public class FloatingBallUtils {
 
     }
 
-
     public static void previousApp(AccessibilityService service){
-
         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
         service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
-
     }
-
 
     public static boolean isFileExist(String filePath){
 
@@ -791,7 +782,6 @@ public class FloatingBallUtils {
     }
 
     private static void tempMove() {
-
         Intent intent = new Intent();
         intent.putExtra("what", Config.TEMP_MOVE);
         intent.setClass(context, FloatService.class);

@@ -25,6 +25,7 @@ import com.hardwork.fg607.relaxfinger.manager.FloatViewManager;
 import com.hardwork.fg607.relaxfinger.model.Config;
 import com.hardwork.fg607.relaxfinger.utils.AccessibilityUtil;
 import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
+import com.hardwork.fg607.relaxfinger.utils.LogUtil;
 import com.orm.SugarRecord;
 
 import net.grandcentrix.tray.AppPreferences;
@@ -83,9 +84,6 @@ public class FloatService extends Service{
                 case Config.FEEDBACK_SWITCH:
                     mGestureImpl.setFeedback(mBundle.getBoolean("isFeedback", true));
                     break;
-                case Config.HIDE_AREA_SWITCH:
-                    mFloatManager.enableHideArea(mBundle.getBoolean("showHideArea",true));
-                    break;
                 case Config.AUTO_HIDE_SWITCH:
                     mFloatManager.enableLandscapeHide(mBundle.getBoolean("isAutoHide",false));
                     break;
@@ -136,25 +134,15 @@ public class FloatService extends Service{
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
                 String action = intent.getAction();
-
                 if(Config.ACTION_SHOW_FLOATBALL.equals(action)){
-
                     if(sp.getBoolean("floatSwitch",false)){
-
                         mFloatManager.recoveryFromNotifyBar();
                     }
-
-
                 }
             }
         };
-
         registerReceiver(mReceiver, filter);
-
-
-
     }
 
     @Override
@@ -235,22 +223,17 @@ public class FloatService extends Service{
 
     @Override
     public IBinder onBind(Intent intent) {
-
         return mMessenger.getBinder();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
         mFloatManager.configurationChanged(newConfig);
-
     }
 
     private void openSettingActivity() {
-
         Intent intent = new Intent(this, SettingActivity.class);
-
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -258,7 +241,7 @@ public class FloatService extends Service{
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        LogUtil.e("onDestroy-----");
         unregisterReceiver(mReceiver);
     }
 }

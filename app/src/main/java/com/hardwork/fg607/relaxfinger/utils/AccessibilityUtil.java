@@ -69,6 +69,25 @@ public class AccessibilityUtil {
         return accessibilityFound;
     }
 
+    /**
+     * 判断是否存在置顶的无障碍服务
+     *
+     * @param name
+     * @return
+     */
+    public boolean isAccessibilityServiceRunning(String name) {
+        AccessibilityManager am = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+        List<AccessibilityServiceInfo> enableServices
+                = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_GENERIC);
+        for (AccessibilityServiceInfo enableService : enableServices) {
+//            Log.i(TAG, "installService.id-->" + enableService.getId());
+            if (enableService.getId().endsWith(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void openSettingActivity() {
 
         Intent intent = new Intent(context, SettingActivity.class);
@@ -91,6 +110,24 @@ public class AccessibilityUtil {
         return true;
     }
 
+    /**
+     * 判断是否存在置顶的无障碍服务
+     *
+     * @param name
+     * @return
+     */
+    public boolean isAccessibilityServiceRunning(Context mContext,String name) {
+        AccessibilityManager am = (AccessibilityManager) mContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
+        List<AccessibilityServiceInfo> enableServices
+                = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_GENERIC);
+        for (AccessibilityServiceInfo enableService : enableServices) {
+//            Log.i(TAG, "installService.id-->" + enableService.getId());
+            if (enableService.getId().endsWith(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static boolean isServiceRunning(Context mContext,String className) {
 
@@ -114,7 +151,6 @@ public class AccessibilityUtil {
     }
 
     public static boolean isServiceRunning(){
-
         return isServiceRunning(context,"com.hardwork.fg607.relaxfinger.service.FloatService");
     }
 

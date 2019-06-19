@@ -29,6 +29,7 @@ import com.hardwork.fg607.relaxfinger.utils.AppUtils;
 import com.hardwork.fg607.relaxfinger.utils.DensityUtil;
 import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
 import com.hardwork.fg607.relaxfinger.utils.ImageUtils;
+import com.hardwork.fg607.relaxfinger.utils.LogUtil;
 import com.ogaclejapan.arclayout.ArcLayout;
 
 import net.grandcentrix.tray.AppPreferences;
@@ -91,10 +92,7 @@ public class MenuViewProxy implements View.OnClickListener {
     private Spring mScaleSpring;
     private ScaleSpringListener mSpringListener;
 
-
-
     public interface OnMenuItemClickListener{
-
         void clickeMenuA();
         void clickeMenuB();
         void clickeMenuC();
@@ -107,9 +105,7 @@ public class MenuViewProxy implements View.OnClickListener {
 
         @Override
         public void onSpringUpdate(Spring spring) {
-
             float mappedValue = (float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, 1, 0.8);
-
             mMenuA.setScaleX(mappedValue);
             mMenuA.setScaleY(mappedValue);
             mMenuB.setScaleX(mappedValue);
@@ -125,13 +121,9 @@ public class MenuViewProxy implements View.OnClickListener {
     }
 
     public MenuViewProxy(Context context){
-
         mContext = context;
-
         mPreferences = FloatingBallUtils.getMultiProcessPreferences();
-
         mWindowManager = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
-
         mIsBallRight = mPreferences.getBoolean("floatRight", true);
 
         initMenuView();
@@ -165,17 +157,14 @@ public class MenuViewProxy implements View.OnClickListener {
         mShowAnimationSetL.addAnimation(showScaleAimation1);
         mShowAnimationSetL.setDuration(130);
 
-
         mShowAnimationSetL.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
                 mScaleSpring.setEndValue(1);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
                 mScaleSpring.setEndValue(0);
             }
 
@@ -188,13 +177,11 @@ public class MenuViewProxy implements View.OnClickListener {
         mShowAnimationSetR.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
                 mScaleSpring.setEndValue(1);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
                mScaleSpring.setEndValue(0);
             }
 
@@ -215,12 +202,10 @@ public class MenuViewProxy implements View.OnClickListener {
 
         AlphaAnimation hideAlphaAnimation = new AlphaAnimation(1.0f, 0);
 
-
         mHideAnimationSetR.addAnimation(hideAlphaAnimation);
         mHideAnimationSetR.addAnimation(hideScaleAnimation);
         mHideAnimationSetR.setFillAfter(true);
         mHideAnimationSetR.setDuration(130);
-
 
         mHideAnimationSetL.addAnimation(hideAlphaAnimation);
         mHideAnimationSetL.addAnimation(hideScaleAnimation1);
@@ -235,44 +220,27 @@ public class MenuViewProxy implements View.OnClickListener {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
-
                 mScaleSpring.removeListener(mSpringListener);
-
                 if (mMenuView.getParent() != null) {
-
                     MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
+                            LogUtil.e("removeViewImmediate-----");
                             mWindowManager.removeViewImmediate(mMenuView);
                             mClearCount++;
                             if(mClearCount >= CLEAR_COUNT){
-
                                 mClearCount = -1;
-
                                 Drawable drawable;
-
                                 drawable = mMenuA.getBackground();
-
                                 releaseBitmap(drawable);
-
                                 drawable = mMenuB.getBackground();
-
                                 releaseBitmap(drawable);
-
                                 drawable = mMenuC.getBackground();
-
                                 releaseBitmap(drawable);
-
                                 drawable = mMenuD.getBackground();
-
                                 releaseBitmap(drawable);
-
                                 drawable = mMenuE.getBackground();
-
                                 releaseBitmap(drawable);
-
                                 System.gc();
                                 System.runFinalization();
                             }
@@ -306,35 +274,22 @@ public class MenuViewProxy implements View.OnClickListener {
                     MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
+                            LogUtil.e("removeViewImmediate-----");
                             mWindowManager.removeViewImmediate(mMenuView);
                             mClearCount++;
                             if(mClearCount >= CLEAR_COUNT){
-
                                 mClearCount = -1;
-
                                 Drawable drawable;
-
                                 drawable = mMenuA.getBackground();
-
                                 releaseBitmap(drawable);
-
                                 drawable = mMenuB.getBackground();
-
                                 releaseBitmap(drawable);
-
                                 drawable = mMenuC.getBackground();
-
                                 releaseBitmap(drawable);
-
                                 drawable = mMenuD.getBackground();
-
                                 releaseBitmap(drawable);
-
                                 drawable = mMenuE.getBackground();
-
                                 releaseBitmap(drawable);
-
                                 System.gc();
                                 System.runFinalization();
                             }
@@ -367,7 +322,7 @@ public class MenuViewProxy implements View.OnClickListener {
 
         }else {
 
-            mWinLayoutParams.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
+            mWinLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
         }
 
         mWinLayoutParams.flags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS|
@@ -377,7 +332,7 @@ public class MenuViewProxy implements View.OnClickListener {
         mWinLayoutParams.width = MENU_WINDOW_WIDTH;
         mWinLayoutParams.height = MENU_WINDOW_HEIGHT;
 
-        mWinLayoutParams.format = PixelFormat.TRANSLUCENT;
+        mWinLayoutParams.format = PixelFormat.RGBA_8888;
     }
 
     private void initMenuView() {
@@ -600,7 +555,6 @@ public class MenuViewProxy implements View.OnClickListener {
     }
 
     public boolean isExistItem(){
-
         return mIsExistItem == 0?false:true;
     }
 

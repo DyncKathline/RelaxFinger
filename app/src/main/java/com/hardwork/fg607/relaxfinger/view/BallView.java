@@ -1,6 +1,7 @@
 package com.hardwork.fg607.relaxfinger.view;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +17,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -25,10 +27,12 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
+
 import com.hardwork.fg607.relaxfinger.R;
 import com.hardwork.fg607.relaxfinger.utils.DensityUtil;
 import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
 import com.hardwork.fg607.relaxfinger.utils.ImageUtils;
+import com.hardwork.fg607.relaxfinger.utils.LogUtil;
 
 import net.grandcentrix.tray.AppPreferences;
 
@@ -51,7 +55,7 @@ public class BallView extends View {
     public static final int SWIPE_UP = 3;
     public static final int SWIPE_DOWN = 4;
     public static final int SWIPE_LEFT = 5;
-    public static final int SWIPE_RIGHT= 6;
+    public static final int SWIPE_RIGHT = 6;
     public static final int MOVE = 7;
     public static final int DOWN = 8;
     public static final int QUICK_SINGLE_TAP = 9;
@@ -92,59 +96,58 @@ public class BallView extends View {
     private boolean mIsFreeMode = false;
     private boolean mInLongPress;
 
-    private Handler mHandler = new Handler(){
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
-            switch (msg.what){
-
+            switch (msg.what) {
                 case SINGLE_TAP:
-                    if(mGestureListener != null) mGestureListener.onSingleTap();
+                    if (mGestureListener != null) mGestureListener.onSingleTap();
                     break;
                 case QUICK_SINGLE_TAP:
-                    if(mGestureListener != null) mGestureListener.onQucikSingleTap();
+                    if (mGestureListener != null) mGestureListener.onQucikSingleTap();
                     break;
                 case DOUBLE_TAP:
-                    if(mGestureListener != null) mGestureListener.onDoubleTap();
+                    if (mGestureListener != null) mGestureListener.onDoubleTap();
                     break;
                 case LONGPRESS:
                     mInLongPress = true;
-                    if(mGestureListener != null) mGestureListener.onLongPress();
+                    if (mGestureListener != null) mGestureListener.onLongPress();
                     break;
                 case SWIPE_UP:
-                    if(mGestureListener != null) mGestureListener.onScrollUp();
+                    if (mGestureListener != null) mGestureListener.onScrollUp();
                     break;
                 case SWIPE_DOWN:
-                    if(mGestureListener != null) mGestureListener.onScrollDown();
+                    if (mGestureListener != null) mGestureListener.onScrollDown();
                     break;
                 case SWIPE_LEFT:
-                    if(mGestureListener != null) mGestureListener.onScrollLeft();
+                    if (mGestureListener != null) mGestureListener.onScrollLeft();
                     break;
                 case SWIPE_RIGHT:
-                    if(mGestureListener != null) mGestureListener.onScrollRight();
+                    if (mGestureListener != null) mGestureListener.onScrollRight();
                     break;
                 case MOVE:
-                    if(mGestureListener != null) mGestureListener.onMove();
+                    if (mGestureListener != null) mGestureListener.onMove();
                     break;
                 case DOWN:
-                    if(mGestureListener != null) mGestureListener.onDown();
+                    if (mGestureListener != null) mGestureListener.onDown();
                     break;
                 case MOVE_FINISH:
-                    if(mBallEventListener != null) mBallEventListener.onBallMoveFinish();
+                    if (mBallEventListener != null) mBallEventListener.onBallMoveFinish();
                     break;
                 case HOME_KEY_PRESSED:
-                    if(mBallEventListener != null) mBallEventListener.onHomeKeyPressed();
+                    if (mBallEventListener != null) mBallEventListener.onHomeKeyPressed();
                     break;
                 case RECENT_KEY_PRESSED:
-                    if(mBallEventListener != null) mBallEventListener.onRecentKeyPressed();
+                    if (mBallEventListener != null) mBallEventListener.onRecentKeyPressed();
                     break;
                 case SET_ALPHA:
                     getBackground().setAlpha(mAlpha);
                     break;
                 case FEEDBACK:
-                    mParentLayout.setPadding(FEED_ZOOM,FEED_ZOOM,FEED_ZOOM,FEED_ZOOM);
+                    mParentLayout.setPadding(FEED_ZOOM, FEED_ZOOM, FEED_ZOOM, FEED_ZOOM);
                     break;
                 default:
                     break;
@@ -152,95 +155,69 @@ public class BallView extends View {
         }
     };
 
-
     public void updatePosition() {
-
-        if(getParent() != null){
-
-            mWindowManager.updateViewLayout(mParentLayout,mWinLayoutParams);
+        if (getParent() != null) {
+            mWindowManager.updateViewLayout(mParentLayout, mWinLayoutParams);
         }
     }
 
     public void activateFreeMode() {
-
         mIsFreeMode = true;
     }
 
-    public void cancelFreeMode(){
-
+    public void cancelFreeMode() {
         mIsFreeMode = false;
     }
 
-
     public interface OnGestureListener {
-
         void onSingleTap();
-
         void onQucikSingleTap();
-
         void onDoubleTap();
-
         void onLongPress();
-
         void onScrollUp();
-
         void onScrollDown();
-
         void onScrollLeft();
-
         void onScrollRight();
-
         void onMove();
-
         void onDown();
-
     }
 
-    public interface OnBallEventListener{
-
+    public interface OnBallEventListener {
         void onBallMoveFinish();
-
         void onHomeKeyPressed();
-
         void onRecentKeyPressed();
     }
 
-
     public BallView(Context context) {
+        this(context, null);
+    }
 
-        super(context);
+    public BallView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
+    public BallView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         mContext = context;
-
         mPreferences = FloatingBallUtils.getMultiProcessPreferences();
-
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-
         //系统能识别的最小滑动距离
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-
         mTouchSlopSquare = mTouchSlop * mTouchSlop;
-
         mCanMove = mPreferences.getBoolean("moveSwitch", false);
         mSize = mPreferences.getInt("ballsize", (MIN_BALL_SIZE + MAX_BALL_SIZE) / 2);
         mAlpha = mPreferences.getInt("ballalpha", (MIN_BALL_ALPHA + MAX_BALL_ALPHA) / 2);
         mTheme = mPreferences.getString("theme", "默认");
 
-
         setTheme(mTheme);
-
         initParentLayout();
-
         initLayoutParams();
         initAnimation();
-
         setClickable(true);
     }
 
     public void setTheme(String theme) {
-
         mTheme = theme;
-
         switch (theme) {
             case "默认":
                 setBackground(getResources().getDrawable(R.drawable.theme1));
@@ -249,7 +226,7 @@ public class BallView extends View {
                 setBackground(getResources().getDrawable(R.drawable.theme2));
                 break;
             case "主题三":
-               setBackground(getResources().getDrawable(R.drawable.theme3));
+                setBackground(getResources().getDrawable(R.drawable.theme3));
                 break;
             case "主题四":
                 setBackground(getResources().getDrawable(R.drawable.theme4));
@@ -258,15 +235,14 @@ public class BallView extends View {
                 setBackground(getResources().getDrawable(R.drawable.ufo));
                 break;
             case "自定义":
-
-                if(FloatingBallUtils.isFileExist("/RelaxFinger/DIY.png")) {
+                if (FloatingBallUtils.isFileExist("/RelaxFinger/DIY.png")) {
 
                     String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
                             + "/RelaxFinger/DIY.png";
 
                     setBackground(BitmapDrawable.createFromPath(filePath));
 
-                }else{
+                } else {
 
                     setBackground(getResources().getDrawable(R.drawable.theme1));
 
@@ -279,45 +255,34 @@ public class BallView extends View {
                 mPreferences.put("theme", "默认");
                 break;
         }
-
-
-
         getBackground().setAlpha(mAlpha);
-
-
     }
 
     public void showNotification(Drawable notifyIcon) {
 
-        Drawable roundIcon = ImageUtils.toRoundDrawable(notifyIcon,DensityUtil.dip2px(mContext,mSize));
+        Drawable roundIcon = ImageUtils.toRoundDrawable(notifyIcon, DensityUtil.dip2px(mContext, mSize));
 
         setBackground(roundIcon);
 
         showNotifyAnim();
     }
 
-    public void clearNotification(){
-
+    public void clearNotification() {
         setTheme(mTheme);
     }
 
-    public void setAutoMoveTheme(boolean isAutoMove){
-
-        if(isAutoMove){
-
+    public void setAutoMoveTheme(boolean isAutoMove) {
+        if (isAutoMove) {
             setBackground(getResources().getDrawable(R.drawable.ufo));
-
             getBackground().setAlpha(mAlpha);
-
-        }else {
-
+        } else {
             setTheme(mTheme);
         }
     }
 
-    public void showNotifyAnim(){
+    public void showNotifyAnim() {
 
-        ObjectAnimator shakeAnim = FloatingBallUtils.shakeAnim(this,1.0f);
+        ObjectAnimator shakeAnim = FloatingBallUtils.shakeAnim(this, 1.0f);
 
         shakeAnim.setupEndValues();
 
@@ -343,7 +308,7 @@ public class BallView extends View {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
+                LogUtil.e("removeView-----");
                 mWindowManager.removeView(mParentLayout);
                 mParentLayout.removeView(BallView.this);
 
@@ -361,7 +326,7 @@ public class BallView extends View {
         mGestureListener = listener;
     }
 
-    public void setOnMoveFinishListener(OnBallEventListener listener){
+    public void setOnMoveFinishListener(OnBallEventListener listener) {
 
         mBallEventListener = listener;
     }
@@ -370,39 +335,33 @@ public class BallView extends View {
 
         mParentLayout = new InnerLinearLayout(mContext);
 
-        mParentLayout.setPadding(FEED_ZOOM,FEED_ZOOM,FEED_ZOOM,FEED_ZOOM);
+        mParentLayout.setPadding(FEED_ZOOM, FEED_ZOOM, FEED_ZOOM, FEED_ZOOM);
 
 
     }
 
     private void initLayoutParams() {
-
         mWinLayoutParams = new WindowManager.LayoutParams();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
             mWinLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-
-        }else {
-
-            mWinLayoutParams.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
+        } else {
+            mWinLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
         }
 
-        mWinLayoutParams.flags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS |
-        WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR;
+        mWinLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         mWinLayoutParams.gravity = Gravity.LEFT | Gravity.TOP;
 
-        mWinLayoutParams.x = mPreferences.getInt("ballWmParamsX", FloatingBallUtils.getScreenWidth() - mSize);
-        mWinLayoutParams.y = mPreferences.getInt("ballWmParamsY", FloatingBallUtils.getScreenHeight() / 2 - mSize / 2);
+        mWinLayoutParams.x = mPreferences.getInt("ballWmParamsX", DensityUtil.getScreenWidth(getContext()) / 2 - mSize / 2);
+        mWinLayoutParams.y = mPreferences.getInt("ballWmParamsY", DensityUtil.getScreenHeight(getContext()) / 2 - mSize / 2);
 
         mWinLayoutParams.width = mSize;
         mWinLayoutParams.height = mSize;
 
-        mWinLayoutParams.format = PixelFormat.TRANSLUCENT;
+        mWinLayoutParams.format = PixelFormat.RGBA_8888;
     }
 
-    public WindowManager.LayoutParams getWindowLayoutParams(){
-
+    public WindowManager.LayoutParams getWindowLayoutParams() {
         return mWinLayoutParams;
     }
 
@@ -412,29 +371,29 @@ public class BallView extends View {
 
         getBackground().setAlpha(200);
 
-        mParentLayout.setPadding(0,0,0,0);
+        mParentLayout.setPadding(0, 0, 0, 0);
 
 
         lastTime = System.currentTimeMillis();
 
-        if(mHandler.hasMessages(SET_ALPHA)){
+        if (mHandler.hasMessages(SET_ALPHA)) {
 
             mHandler.removeMessages(SET_ALPHA);
         }
-        mHandler.sendEmptyMessageDelayed(SET_ALPHA,3000);
+        mHandler.sendEmptyMessageDelayed(SET_ALPHA, 3000);
 
     }
 
     private void touchUpFeedback() {
 
-        if(System.currentTimeMillis()-lastTime < 50){
+        if (System.currentTimeMillis() - lastTime < 50) {
 
-            mHandler.sendEmptyMessageDelayed(FEEDBACK,20);
+            mHandler.sendEmptyMessageDelayed(FEEDBACK, 20);
 
 
-        }else {
+        } else {
 
-            mParentLayout.setPadding(FEED_ZOOM,FEED_ZOOM,FEED_ZOOM,FEED_ZOOM);
+            mParentLayout.setPadding(FEED_ZOOM, FEED_ZOOM, FEED_ZOOM, FEED_ZOOM);
         }
 
     }
@@ -442,7 +401,7 @@ public class BallView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        switch (event.getAction()){
+        switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
 
@@ -462,20 +421,20 @@ public class BallView extends View {
                 }
 
                 mInLongPress = false;
-                mHandler.sendEmptyMessageDelayed(LONGPRESS,LONG_PRESS_TIMEOUT);
+                mHandler.sendEmptyMessageDelayed(LONGPRESS, LONG_PRESS_TIMEOUT);
 
                 mDownX = (int) event.getRawX();
                 mDownY = (int) event.getRawY();
 
                 mHasMoved = false;
                 mHasScrolled = false;
-                mCanMove = mPreferences.getBoolean("moveSwitch",false);
+                mCanMove = mPreferences.getBoolean("moveSwitch", false);
                 break;
             case MotionEvent.ACTION_MOVE:
 
-                if(mIsDoubleTapping){
+                if (mIsDoubleTapping) {
 
-                   return true;
+                    return true;
                 }
 
                 final int deltaX = (int) (event.getRawX() - mDownX);
@@ -484,18 +443,18 @@ public class BallView extends View {
                 int distance = (deltaX * deltaX) + (deltaY * deltaY);
 
                 //判断是否为滑动
-                if(distance>mTouchSlopSquare){
+                if (distance > mTouchSlopSquare) {
 
                     mHasScrolled = true;
                     mHandler.removeMessages(LONGPRESS);
 
                     //移动悬浮球
-                    if((mCanMove || mIsFreeMode) && mGestureListener != null){
+                    if ((mCanMove || mIsFreeMode) && mGestureListener != null) {
 
-                        mWinLayoutParams.x = (int)(event.getRawX()) - mSize/2;
-                        mWinLayoutParams.y = (int)(event.getRawY()) - mSize/2;
+                        mWinLayoutParams.x = (int) (event.getRawX()) - mSize / 2;
+                        mWinLayoutParams.y = (int) (event.getRawY()) - mSize;
 
-                        mWindowManager.updateViewLayout(mParentLayout,mWinLayoutParams);
+                        mWindowManager.updateViewLayout(mParentLayout, mWinLayoutParams);
 
                         mHandler.sendEmptyMessage(MOVE);
 
@@ -505,12 +464,9 @@ public class BallView extends View {
                     }
 
                     //解析上下左右手势
-                    if(!mGestureActive){
-
+                    if (!mGestureActive) {
                         handleGesture(event);
-
                         return true;
-
                     }
 
                 }
@@ -520,28 +476,28 @@ public class BallView extends View {
 
                 touchUpFeedback();
 
-                if(mIsDoubleTapping){
+                if (mIsDoubleTapping) {
 
                     return true;
                 }
 
-                if(mHandler.hasMessages(LONGPRESS)){
+                if (mHandler.hasMessages(LONGPRESS)) {
 
                     mHandler.removeMessages(LONGPRESS);
                 }
 
-                if(!mInLongPress && !mHasScrolled){
+                if (!mInLongPress && !mHasScrolled) {
 
-                    if(!mIsDoubleTapping){
+                    if (!mIsDoubleTapping) {
 
-                        mHandler.sendEmptyMessageDelayed(SINGLE_TAP,DOUBLE_TAP_TIMEOUT);
+                        mHandler.sendEmptyMessageDelayed(SINGLE_TAP, DOUBLE_TAP_TIMEOUT);
                     }
 
                     mHandler.sendEmptyMessage(QUICK_SINGLE_TAP);
                 }
 
 
-                if(mHasMoved){
+                if (mHasMoved) {
 
                     mHandler.sendEmptyMessage(MOVE_FINISH);
                     mHasMoved = false;
@@ -552,7 +508,7 @@ public class BallView extends View {
                 break;
             default:
                 touchUpFeedback();
-                if(mHasMoved){
+                if (mHasMoved) {
 
                     mHandler.sendEmptyMessage(MOVE_FINISH);
                     mHasMoved = false;
@@ -566,6 +522,7 @@ public class BallView extends View {
 
     /**
      * 解析上下左右手势
+     *
      * @param event
      */
     private void handleGesture(MotionEvent event) {
@@ -587,7 +544,6 @@ public class BallView extends View {
                 mHandler.sendEmptyMessage(SWIPE_UP);//手指往上滑动
                 mGestureActive = true;
             }
-
         } else {
             //当这个角度小于45度时候 我们就认为他是左右方向的滑动
             if (xDistance < 0) {
@@ -600,78 +556,58 @@ public class BallView extends View {
         }
     }
 
-
-    public void setMove(boolean canMove){
-
+    public void setMove(boolean canMove) {
         mCanMove = canMove;
     }
 
-    public void setAlpha(int alpha){
-
+    public void setAlpha(int alpha) {
         mAlpha = alpha;
-
         getBackground().setAlpha(mAlpha);
-
-
     }
 
-    public void setBallSize(int size){
-
+    public void setBallSize(int size) {
         mSize = size;
         mWinLayoutParams.width = mSize;
         mWinLayoutParams.height = mSize;
     }
 
-    public int getBallSize(){
-
+    public int getBallSize() {
         return mSize;
     }
 
-    public void show(){
-
-        if(getParent() == null){
-
+    public void show() {
+        if (getParent() == null) {
+            LogUtil.e("show-----");
             mParentLayout.addView(this);
-
-            mWindowManager.addView(mParentLayout,mWinLayoutParams);
-
+            mWindowManager.addView(mParentLayout, mWinLayoutParams);
             startAnimation(mZoomInAnim);
         }
-
     }
 
-    public void quickShow(){
-
-        if(getParent() == null){
-
-            mParentLayout.addView(this);
-
-            mWindowManager.addView(mParentLayout,mWinLayoutParams);
-
-        }
-    }
-
-    public void hide(){
-
-        if(getParent() != null){
-
+    public void hide() {
+        if (getParent() != null) {
+            LogUtil.e("hide-----");
             startAnimation(mZoomOutAnim);
         }
-
     }
 
-    public void quickHide(){
+    public void quickShow() {
+        if (getParent() == null) {
+            LogUtil.e("quickShow-----");
+            mParentLayout.addView(this);
+            mWindowManager.addView(mParentLayout, mWinLayoutParams);
+        }
+    }
 
-        if(getParent() != null){
-
+    public void quickHide() {
+        if (getParent() != null) {
+            LogUtil.e("removeView-----");
             mWindowManager.removeView(mParentLayout);
             mParentLayout.removeView(BallView.this);
         }
-
     }
 
-    public class InnerLinearLayout extends LinearLayout{
-
+    public class InnerLinearLayout extends LinearLayout {
 
         public InnerLinearLayout(Context context) {
             super(context);
