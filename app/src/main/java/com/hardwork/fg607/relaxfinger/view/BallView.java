@@ -36,6 +36,8 @@ import com.hardwork.fg607.relaxfinger.utils.LogUtil;
 
 import net.grandcentrix.tray.AppPreferences;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by fg607 on 16-11-24.
  */
@@ -451,8 +453,8 @@ public class BallView extends View {
                     //移动悬浮球
                     if ((mCanMove || mIsFreeMode) && mGestureListener != null) {
 
-                        mWinLayoutParams.x = (int) (event.getRawX()) - mSize / 2;
-                        mWinLayoutParams.y = (int) (event.getRawY()) - mSize;
+                        mWinLayoutParams.x = (int) (event.getRawX()) - mSize / 2 - getStatusBarHeight();
+                        mWinLayoutParams.y = (int) (event.getRawY()) - mSize /2  - getStatusBarHeight();
 
                         mWindowManager.updateViewLayout(mParentLayout, mWinLayoutParams);
 
@@ -554,6 +556,29 @@ public class BallView extends View {
                 mGestureActive = true;
             }
         }
+    }
+    /**
+     * 记录系统状态栏的高度
+     */
+    private static int statusBarHeight;
+    /**
+     * 用于获取状态栏的高度。
+     *
+     * @return 返回状态栏高度的像素值。
+     */
+    private int getStatusBarHeight() {
+        if (statusBarHeight == 0) {
+            try {
+                Class<?> c = Class.forName("com.android.internal.R$dimen");
+                Object o = c.newInstance();
+                Field field = c.getField("status_bar_height");
+                int x = (Integer) field.get(o);
+                statusBarHeight = getResources().getDimensionPixelSize(x);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return statusBarHeight;
     }
 
     public void setMove(boolean canMove) {
