@@ -225,7 +225,6 @@ public class MenuViewProxy implements View.OnClickListener {
                     MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            LogUtil.e("removeViewImmediate-----");
                             mWindowManager.removeViewImmediate(mMenuView);
                             mClearCount++;
                             if(mClearCount >= CLEAR_COUNT){
@@ -274,7 +273,6 @@ public class MenuViewProxy implements View.OnClickListener {
                     MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            LogUtil.e("removeViewImmediate-----");
                             mWindowManager.removeViewImmediate(mMenuView);
                             mClearCount++;
                             if(mClearCount >= CLEAR_COUNT){

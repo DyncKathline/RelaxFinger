@@ -94,8 +94,6 @@ public class FolderViewProxy {
                     MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
-                            LogUtil.e("removeViewImmediate-----");
                             FloatingBallUtils.getWindowManager().removeViewImmediate(mFolderView);
 
                             int count = mGridView.getChildCount();

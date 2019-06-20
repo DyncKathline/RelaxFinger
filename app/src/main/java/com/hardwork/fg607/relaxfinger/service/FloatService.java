@@ -84,6 +84,9 @@ public class FloatService extends Service{
                 case Config.FEEDBACK_SWITCH:
                     mGestureImpl.setFeedback(mBundle.getBoolean("isFeedback", true));
                     break;
+                case Config.HIDE_AREA_SWITCH:
+                    mFloatManager.enableHideArea(mBundle.getBoolean("showHideArea",true));
+                    break;
                 case Config.AUTO_HIDE_SWITCH:
                     mFloatManager.enableLandscapeHide(mBundle.getBoolean("isAutoHide",false));
                     break;
@@ -241,7 +244,6 @@ public class FloatService extends Service{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LogUtil.e("onDestroy-----");
         unregisterReceiver(mReceiver);
     }
 }

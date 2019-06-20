@@ -75,7 +75,6 @@ public class HideAreaView extends TextView {
                 MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        LogUtil.e("removeViewImmediate-----");
                         FloatingBallUtils.getWindowManager().removeViewImmediate(mParentLayout);
                         mParentLayout.removeView(HideAreaView.this);
                     }

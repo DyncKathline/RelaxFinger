@@ -8,9 +8,9 @@
         android:title="单击" />
 
     <com.jenzz.materialpreference.Preference
-        android:defaultValue="最近任务键"
+        android:defaultValue="无操作"
         android:key="doubleClick"
-        android:summary="最近任务键"
+        android:summary="无操作"
         android:title="双击" />
 
     <com.jenzz.materialpreference.Preference
@@ -20,29 +20,29 @@
         android:title="长按" />
 
     <com.jenzz.materialpreference.Preference
-        android:defaultValue="通知栏"
+        android:defaultValue="无操作"
         android:key="swipeUp"
-        android:summary="通知栏"
+        android:summary="无操作"
         android:title="上滑" />
 
     <com.jenzz.materialpreference.Preference
-        android:defaultValue="Home键"
+        android:defaultValue="无操作"
         android:key="swipeDown"
-        android:summary="Home键"
+        android:summary="无操作"
         android:title="下滑" />
 
 
     <com.jenzz.materialpreference.Preference
-        android:defaultValue="快捷应用"
+        android:defaultValue="无操作"
         android:key="swipeLeft"
-        android:summary="快捷应用"
+        android:summary="无操作"
         android:title="左滑" />
 
 
     <com.jenzz.materialpreference.Preference
-        android:defaultValue="隐藏悬浮球"
+        android:defaultValue="无操作"
         android:key="swipeRight"
-        android:summary="隐藏悬浮球"
+        android:summary="无操作"
         android:title="右滑" />
 
 </PreferenceScreen>

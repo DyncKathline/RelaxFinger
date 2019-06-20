@@ -310,7 +310,6 @@ public class BallView extends View {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                LogUtil.e("removeView-----");
                 mWindowManager.removeView(mParentLayout);
                 mParentLayout.removeView(BallView.this);
 
@@ -602,7 +601,6 @@ public class BallView extends View {
 
     public void show() {
         if (getParent() == null) {
-            LogUtil.e("show-----");
             mParentLayout.addView(this);
             mWindowManager.addView(mParentLayout, mWinLayoutParams);
             startAnimation(mZoomInAnim);
@@ -611,14 +609,12 @@ public class BallView extends View {
 
     public void hide() {
         if (getParent() != null) {
-            LogUtil.e("hide-----");
             startAnimation(mZoomOutAnim);
         }
     }
 
     public void quickShow() {
         if (getParent() == null) {
-            LogUtil.e("quickShow-----");
             mParentLayout.addView(this);
             mWindowManager.addView(mParentLayout, mWinLayoutParams);
         }
@@ -626,7 +622,6 @@ public class BallView extends View {
 
     public void quickHide() {
         if (getParent() != null) {
-            LogUtil.e("removeView-----");
             mWindowManager.removeView(mParentLayout);
             mParentLayout.removeView(BallView.this);
         }
