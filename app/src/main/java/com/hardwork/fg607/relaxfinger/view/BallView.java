@@ -453,7 +453,7 @@ public class BallView extends View {
                     //移动悬浮球
                     if ((mCanMove || mIsFreeMode) && mGestureListener != null) {
 
-                        mWinLayoutParams.x = (int) (event.getRawX()) - mSize / 2 - getStatusBarHeight();
+                        mWinLayoutParams.x = (int) (event.getRawX()) - mSize / 2;
                         mWinLayoutParams.y = (int) (event.getRawY()) - mSize /2  - getStatusBarHeight();
 
                         mWindowManager.updateViewLayout(mParentLayout, mWinLayoutParams);

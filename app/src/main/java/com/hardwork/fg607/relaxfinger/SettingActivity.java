@@ -94,14 +94,6 @@ public class SettingActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        checkUpgrade();
-
-
-       /* if(isServiceRunning()){
-
-            bindFloatService();
-        }*/
-
         if(mAppSettingFragment != null){
 
             mAppSettingFragment.hideFuncDialog();
@@ -333,16 +325,6 @@ public class SettingActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-
-    private void checkUpgrade() {
-        if (mPreferences.getInt("versionCode", 0) < AppUtils.getVersionCode(this)) {
-
-            showUpdateInfo();
-
-            mPreferences.put("versionCode", AppUtils.getVersionCode(this));
-        }
-    }
-
     public void openAlertDialog() {
 
         mAlertDialog = new android.app.AlertDialog.Builder(this).create();
@@ -458,22 +440,6 @@ public class SettingActivity extends AppCompatActivity {
                 "当前消息，下滑忽略所有消息。\r\n"+
                 "10.安卓6.0及以上系统出现叠加层解决方法:在系统设置->开发者选项->停用HW叠加层即可。");
         dialog.show();
-    }
-
-    public void showUpdateInfo() {
-
-        AlertDialog dialog = new AlertDialog.Builder(this).create();
-        dialog.setTitle("悬浮助手-3.0.4.3版本更新内容");
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.setMessage("" +
-                "1.全新的切换上一应用模式，速度更快，不再需要“使用情况访问权限”。\r\n"+
-                "2.修复屏幕旋转权限问题。\r\n"+
-                "3.优化快捷菜单半透明背景，覆盖状态栏和导航栏。\r\n"+
-                "4.修复选择切换上一应用手势不能立即生效的问题。"+
-                "");
-        dialog.show();
-
     }
 
     @Override

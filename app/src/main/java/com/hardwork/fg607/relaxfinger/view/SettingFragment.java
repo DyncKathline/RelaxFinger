@@ -1095,7 +1095,7 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
             if(!Settings.canDrawOverlays(mActivity)){
 
                 mFloatSwitch.setChecked(false);
-                if(isServiceRunning(mContext,"com.hardwork.fg607.relaxfinger.service.FloatService")){
+                if(isServiceRunning()){
 
                     mActivity.stopFloatService();
                 }
