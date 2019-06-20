@@ -227,15 +227,15 @@ public class GestureImpl implements BallView.OnGestureListener,MenuViewProxy.OnM
         mManager.showFromEdge();
 
         //显示通知时上滑忽略通知
-        if(mManager.hasNotification()){
-
-            mManager.ignoreNotification();
-            mManager.showNextNotify();
-
-        }else {
-
-            executeAction(mCurrentFuncList.get(SWIPE_UP));
-        }
+//        if(mManager.hasNotification()){
+//
+//            mManager.ignoreNotification();
+//            mManager.showNextNotify();
+//
+//        }else {
+//
+//            executeAction(mCurrentFuncList.get(SWIPE_UP));
+//        }
 
         if(mManager.isHalfHideMode()){
 
@@ -252,13 +252,13 @@ public class GestureImpl implements BallView.OnGestureListener,MenuViewProxy.OnM
         mManager.showFromEdge();
 
         //显示通知时下滑忽略所有通知
-        if(mManager.hasNotification()){
-
-            mManager.ignoreAllNotification();
-
-        }else {
-            executeAction(mCurrentFuncList.get(SWIPE_DOWN));
-        }
+//        if(mManager.hasNotification()){
+//
+//            mManager.ignoreAllNotification();
+//
+//        }else {
+//            executeAction(mCurrentFuncList.get(SWIPE_DOWN));
+//        }
 
         if(mManager.isHalfHideMode()){
 
@@ -282,9 +282,9 @@ public class GestureImpl implements BallView.OnGestureListener,MenuViewProxy.OnM
 
         }
 
-        if(!mManager.showFromEdge()){
-            executeAction(mCurrentFuncList.get(SWIPE_LEFT));
-        }
+//        if(!mManager.showFromEdge()){
+//            executeAction(mCurrentFuncList.get(SWIPE_LEFT));
+//        }
 
         if(mManager.isHalfHideMode()){
             mManager.resetHalfHideTime();
@@ -301,9 +301,9 @@ public class GestureImpl implements BallView.OnGestureListener,MenuViewProxy.OnM
             mManager.showNextNotify();
             return;
         }
-        if(!mManager.showFromEdge()){
-            executeAction(mCurrentFuncList.get(SWIPE_RIGHT));
-        }
+//        if(!mManager.showFromEdge()){
+//            executeAction(mCurrentFuncList.get(SWIPE_RIGHT));
+//        }
         if(mManager.isHalfHideMode()){
             mManager.resetHalfHideTime();
         }

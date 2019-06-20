@@ -1,11 +1,13 @@
 package com.hardwork.fg607.relaxfinger.receiver;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.hardwork.fg607.relaxfinger.SettingActivity;
 import com.hardwork.fg607.relaxfinger.service.FloatService;
 import com.hardwork.fg607.relaxfinger.model.Config;
+import com.hardwork.fg607.relaxfinger.service.NavAccessibilityService;
 import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
 
 import net.grandcentrix.tray.AppPreferences;
@@ -37,6 +40,15 @@ public class FloatBallReceiver extends BroadcastReceiver {
         sp = FloatingBallUtils.getSharedPreferences();
 
         String action = intent.getAction();
+
+        ComponentName selfComponentName = new ComponentName(context.getPackageName(),
+                NavAccessibilityService.class.getName());
+        String flattenToString = selfComponentName.flattenToString();
+        Settings.Secure.putString(context.getContentResolver(),
+                Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,
+                flattenToString);
+        Settings.Secure.putInt(context.getContentResolver(),
+                Settings.Secure.ACCESSIBILITY_ENABLED, 1);
 
         switch (action){
 
