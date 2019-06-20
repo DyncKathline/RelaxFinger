@@ -280,15 +280,15 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
 
         mFloatBallTheme.setSummary(mPreferences.getString("theme","默认"));
 
-        mDonation = (com.jenzz.materialpreference.Preference) findPreference("donation");
-        mDonation.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-
-                showDonation();
-                return true;
-            }
-        });
+//        mDonation = (com.jenzz.materialpreference.Preference) findPreference("donation");
+//        mDonation.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//            @Override
+//            public boolean onPreferenceClick(Preference preference) {
+//
+//                showDonation();
+//                return true;
+//            }
+//        });
     }
 
     private void initDonateView() {

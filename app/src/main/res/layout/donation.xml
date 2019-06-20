@@ -18,7 +18,6 @@
         android:layout_marginBottom="15dp"
         android:layout_width="240dp"
         android:layout_height="240dp"
-        android:background="@drawable/donate"
         android:id="@+id/view_wechat" />
 
     <View
@@ -27,7 +26,6 @@
         android:layout_marginBottom="15dp"
         android:layout_width="240dp"
         android:layout_height="240dp"
-        android:background="@drawable/alipay"
         android:visibility="gone"
         android:id="@+id/view_alipay" />
 
