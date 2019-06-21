@@ -12,7 +12,7 @@
         android:title="悬浮控制" />
 
     <com.jenzz.materialpreference.SwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="moveSwitch"
         android:summaryOff="悬浮球位置固定"
         android:summaryOn="可自由移动悬浮球"

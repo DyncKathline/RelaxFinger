@@ -49,7 +49,7 @@ public class GestureFragment extends PreferenceFragment implements OnPreferenceC
 
         mClick.setSummary(mPreferences.getString("click", "返回键"));
         mDoubleClick.setSummary(mPreferences.getString("doubleClick", "无操作"));
-        mLongPress.setSummary(mPreferences.getString("longPress","移动(固定)悬浮球"));
+        mLongPress.setSummary(mPreferences.getString("longPress","无操作"));
         mSwipeUp.setSummary(mPreferences.getString("swipeUp", "无操作"));
         mSwipeDown.setSummary(mPreferences.getString("swipeDown", "无操作"));
         mSwipeLeft.setSummary(mPreferences.getString("swipeLeft", "无操作"));

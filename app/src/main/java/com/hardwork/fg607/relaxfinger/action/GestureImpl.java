@@ -78,7 +78,7 @@ public class GestureImpl implements BallView.OnGestureListener,MenuViewProxy.OnM
         if (mCurrentFuncList.size() == 0) {
             mCurrentFuncList.add(mPreferences.getString("click", "返回键"));
             mCurrentFuncList.add(mPreferences.getString("doubleClick", "无操作"));
-            mCurrentFuncList.add(mPreferences.getString("longPress", "移动(固定)悬浮球"));
+            mCurrentFuncList.add(mPreferences.getString("longPress", "无操作"));
             mCurrentFuncList.add(mPreferences.getString("swipeUp", "无操作"));
             mCurrentFuncList.add(mPreferences.getString("swipeDown", "无操作"));
             mCurrentFuncList.add(mPreferences.getString("swipeLeft", "无操作"));
@@ -86,7 +86,7 @@ public class GestureImpl implements BallView.OnGestureListener,MenuViewProxy.OnM
         } else {
             mCurrentFuncList.set(SINGLE_TAP, mPreferences.getString("click", "返回键"));
             mCurrentFuncList.set(DOUBLE_TAP, mPreferences.getString("doubleClick", "无操作"));
-            mCurrentFuncList.set(LONGPRESS, mPreferences.getString("longPress", "移动(固定)悬浮球"));
+            mCurrentFuncList.set(LONGPRESS, mPreferences.getString("longPress", "无操作"));
             mCurrentFuncList.set(SWIPE_UP, mPreferences.getString("swipeUp", "无操作"));
             mCurrentFuncList.set(SWIPE_DOWN, mPreferences.getString("swipeDown", "无操作"));
             mCurrentFuncList.set(SWIPE_LEFT, mPreferences.getString("swipeLeft", "无操作"));

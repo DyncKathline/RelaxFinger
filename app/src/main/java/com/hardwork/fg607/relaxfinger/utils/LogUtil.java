@@ -81,7 +81,8 @@ public class LogUtil {
         int lines = s[4].getLineNumber();
 
         //生成指向java的字符串 加入到TAG标签里面
-        String TAG = String.format("%s.%s (%s.java:%d) ", className, methodName, className, lines);
+        String tagPrefix = TextUtils.isEmpty(customTagPrefix) ? "" : customTagPrefix + ":";
+        String TAG = String.format("%s%s.%s (%s.java:%d) ", tagPrefix, className, methodName, className, lines);
         return TAG;
     }
 
