@@ -273,6 +273,18 @@ public class SettingActivity extends AppCompatActivity {
         showFab();
     }
 
+    public void openAccessibitySettings(){
+
+        try {
+            startActivity(new Intent("android.settings.ACCESSIBILITY_SETTINGS"));
+
+        } catch (ActivityNotFoundException e) {
+
+            e.printStackTrace();
+
+            Toast.makeText(SettingActivity.this, "没有找到辅助功能设置界面，请手动开启！", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -336,15 +348,7 @@ public class SettingActivity extends AppCompatActivity {
 
                 dialog.dismiss();
 
-                try {
-                    startActivity(new Intent("android.settings.ACCESSIBILITY_SETTINGS"));
-
-                } catch (ActivityNotFoundException e) {
-
-                    e.printStackTrace();
-
-                    Toast.makeText(SettingActivity.this, "没有找到辅助功能设置界面，请手动开启！", Toast.LENGTH_SHORT).show();
-                }
+                openAccessibitySettings();
 
 
             }

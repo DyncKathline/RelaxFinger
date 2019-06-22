@@ -44,6 +44,7 @@ import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
 import com.hardwork.fg607.relaxfinger.utils.ImageUtils;
 import com.jenzz.materialpreference.SwitchPreference;
 import com.orm.SugarRecord;
+import com.yanzhenjie.permission.AndPermission;
 
 import net.grandcentrix.tray.AppPreferences;
 import net.grandcentrix.tray.TrayAppPreferences;
@@ -338,28 +339,26 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
     }
 
     private void showThemeDialog() {
+        AndPermission.with(getActivity())
+                .runtime()
+                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                .onGranted(permissions -> {
+                    // Storage permission are allowed.
+                    if (mThemeDialog == null) {
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        if (mThemeView == null) initThemeView();
 
-            if(!FloatingBallUtils.checkPermissionGranted(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)){
-
-                return;
-            }
-
-        }
-
-        if (mThemeDialog == null) {
-
-            if (mThemeView == null) initThemeView();
-
-            mThemeDialog = new AlertDialog.Builder(mContext)
-                    .setTitle("悬浮球主题")
-                    .setView(mThemeView)
-                    .create();
-        }
-
-        mThemeDialog.show();
-
+                        mThemeDialog = new AlertDialog.Builder(mContext)
+                                .setTitle("悬浮球主题")
+                                .setView(mThemeView)
+                                .create();
+                    }
+                    mThemeDialog.show();
+                })
+                .onDenied(permissions -> {
+                    // Storage permission are not allowed.
+                }).start();
     }
 
     private void initThemeView() {
@@ -933,16 +932,17 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
 
             mViewChoosed = setIconChoosed(mThemeChoosed);
 
-
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-
-                if(!FloatingBallUtils.checkPermissionGranted(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)){
-
-                    FloatingBallUtils.hideToNotifybar();
-                }
-
-            }
-
+            AndPermission.with(getActivity())
+                    .runtime()
+                    .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE)
+                    .onGranted(permissions -> {
+                        // Storage permission are allowed.
+                    })
+                    .onDenied(permissions -> {
+                        // Storage permission are not allowed.
+                        FloatingBallUtils.hideToNotifybar();
+                    }).start();
 
             sendMsg(Config.FLOAT_THEME, "theme", mThemeChoosed);
 

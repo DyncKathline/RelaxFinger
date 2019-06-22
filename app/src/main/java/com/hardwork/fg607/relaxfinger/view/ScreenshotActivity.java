@@ -25,8 +25,10 @@ import android.widget.Toast;
 
 import com.hardwork.fg607.relaxfinger.service.FloatService;
 import com.hardwork.fg607.relaxfinger.model.Config;
+import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
 import com.hardwork.fg607.relaxfinger.utils.ScreenshotCallback;
 import com.hardwork.fg607.relaxfinger.utils.Screenshotter;
+import com.yanzhenjie.permission.AndPermission;
 
 public class ScreenshotActivity extends Activity {
 
@@ -82,6 +84,18 @@ public class ScreenshotActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         verifyStoragePermissions(ScreenshotActivity.this);
+        AndPermission.with(this)
+                .runtime()
+                .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                .onGranted(permissions -> {
+                    // Storage permission are allowed.
+                    bindFloatService();
+                    takeScreenshot();
+                })
+                .onDenied(permissions -> {
+                    // Storage permission are not allowed.
+                }).start();
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
             bindFloatService();
             takeScreenshot();
