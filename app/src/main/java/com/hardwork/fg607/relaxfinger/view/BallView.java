@@ -206,7 +206,7 @@ public class BallView extends View {
         //系统能识别的最小滑动距离
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         mTouchSlopSquare = mTouchSlop * mTouchSlop;
-        mCanMove = mPreferences.getBoolean("moveSwitch", false);
+        mCanMove = mPreferences.getBoolean("moveSwitch", true);
         mSize = mPreferences.getInt("ballsize", (MIN_BALL_SIZE + MAX_BALL_SIZE) / 2);
         mAlpha = mPreferences.getInt("ballalpha", (MIN_BALL_ALPHA + MAX_BALL_ALPHA) / 2);
         mTheme = mPreferences.getString("theme", "默认");
@@ -429,7 +429,7 @@ public class BallView extends View {
 
                 mHasMoved = false;
                 mHasScrolled = false;
-                mCanMove = mPreferences.getBoolean("moveSwitch", false);
+                mCanMove = mPreferences.getBoolean("moveSwitch", true);
                 break;
             case MotionEvent.ACTION_MOVE:
 

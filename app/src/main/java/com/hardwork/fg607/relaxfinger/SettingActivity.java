@@ -354,8 +354,8 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 dialog.dismiss();
-                Toast.makeText(SettingActivity.this, "辅助功能未开启，悬浮助手正常退出！", Toast.LENGTH_SHORT).show();
-                saveExit();
+//                Toast.makeText(SettingActivity.this, "辅助功能未开启，悬浮助手正常退出！", Toast.LENGTH_SHORT).show();
+//                saveExit();
             }
         });
 

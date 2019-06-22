@@ -1080,7 +1080,7 @@ public class SettingFragment extends PreferenceFragment implements OnPreferenceC
             mLockScreenSwitch.setChecked(false);
         }
 
-        boolean canMove = mPreferences.getBoolean("moveSwitch", false);
+        boolean canMove = mPreferences.getBoolean("moveSwitch", true);
 
         mMoveSwitch.setChecked(canMove);
 
