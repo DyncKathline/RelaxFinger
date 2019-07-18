@@ -12,39 +12,24 @@ android {
         versionName "3.0.4.3"
     }
 
-//    signingConfigs {
-//        release {
-//            storeFile file("hardwork.jks")
-//            storePassword project.hasProperty("KEYSTORE_PASS") ? KEYSTORE_PASS : System.getenv("KEYSTORE_PASS")
-//            keyAlias project.hasProperty("ALIAS_NAME") ? ALIAS_NAME : System.getenv("ALIAS_NAME")
-//            keyPassword project.hasProperty("ALIAS_PASS") ? ALIAS_PASS : System.getenv("ALIAS_PASS")
-//        }
-//    }
-//
-//    buildTypes {
-//        release {
-//            minifyEnabled true
-//            signingConfig signingConfigs.release
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
-//    }
     signingConfigs {
         minrray {
-            keyAlias 'minrray'
-            keyPassword '123456'
-            storeFile file('../minrray.jks')
-            storePassword '123456'
+            keyAlias 'moringhost'
+            keyPassword 'dyncandroid'
+            storeFile file('../moringhost.jks')
+            storePassword 'dyncandroid'
         }
     }
+
     buildTypes {
         release {
             minifyEnabled false
-            buildConfigField "boolean", "LOG_DEBUG", "false"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.minrray
         }
         debug {
             minifyEnabled false
-            buildConfigField "boolean", "LOG_DEBUG", "true"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.minrray
         }
     }
@@ -52,6 +37,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "悬浮助手.${defaultConfig.versionName}.apk"
+        }
     }
 }
 

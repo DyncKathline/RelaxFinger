@@ -857,7 +857,7 @@ public class FloatingBallUtils {
 
                 //打开
                 Settings.System.putInt(resolver, Settings.System.ACCELEROMETER_ROTATION, 1);
-                MyApplication.getMainThreadHandler().post(new Runnable() {
+                ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                     @Override
                     public void run() {
 
@@ -870,7 +870,7 @@ public class FloatingBallUtils {
 
                 //关闭
                 Settings.System.putInt(resolver, Settings.System.ACCELEROMETER_ROTATION, 0);
-               MyApplication.getMainThreadHandler().post(new Runnable() {
+               ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                    @Override
                    public void run() {
                        Toast.makeText(context,"屏幕旋转已关闭",Toast.LENGTH_SHORT).show();
@@ -880,7 +880,7 @@ public class FloatingBallUtils {
             }
         }/*else {
 
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
 
@@ -915,7 +915,7 @@ public class FloatingBallUtils {
         if(audioManager.getRingerMode()!=AudioManager.RINGER_MODE_SILENT){
 
             audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(context,"静音模式已启用",Toast.LENGTH_SHORT).show();
@@ -925,7 +925,7 @@ public class FloatingBallUtils {
         }else {
 
             audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
 
@@ -962,7 +962,7 @@ public class FloatingBallUtils {
         if(audioManager.getRingerMode()==AudioManager.RINGER_MODE_NORMAL){
 
             audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(context,"震动模式已启用",Toast.LENGTH_SHORT).show();
@@ -972,7 +972,7 @@ public class FloatingBallUtils {
         }else {
 
             audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(context,"普通模式已启用",Toast.LENGTH_SHORT).show();
@@ -1003,7 +1003,7 @@ public class FloatingBallUtils {
                 parameter.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
                 camera.setParameters(parameter);
 
-                MyApplication.getMainThreadHandler().post(new Runnable() {
+                ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(context,"手电筒已打开",Toast.LENGTH_SHORT).show();
@@ -1016,7 +1016,7 @@ public class FloatingBallUtils {
                 camera.release();
                 camera = null;
 
-                MyApplication.getMainThreadHandler().post(new Runnable() {
+                ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(context,"手电筒已关闭",Toast.LENGTH_SHORT).show();
@@ -1035,7 +1035,7 @@ public class FloatingBallUtils {
                     list = manager.getCameraIdList();
                     manager.setTorchMode(list[0], true);
                     isFlashOpened = true;
-                    MyApplication.getMainThreadHandler().post(new Runnable() {
+                    ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(context,"手电筒已打开",Toast.LENGTH_SHORT).show();
@@ -1053,7 +1053,7 @@ public class FloatingBallUtils {
                     list = manager.getCameraIdList();
                     manager.setTorchMode(list[0], false);
                     isFlashOpened = false;
-                    MyApplication.getMainThreadHandler().post(new Runnable() {
+                    ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(context,"手电筒已关闭",Toast.LENGTH_SHORT).show();
@@ -1076,7 +1076,7 @@ public class FloatingBallUtils {
 
             adapter.disable();
 
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(context, "蓝牙已关闭", Toast.LENGTH_SHORT).show();
@@ -1086,7 +1086,7 @@ public class FloatingBallUtils {
         } else {
 
             adapter.enable();
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(context, "蓝牙已开启", Toast.LENGTH_SHORT).show();
@@ -1141,7 +1141,7 @@ public class FloatingBallUtils {
 
                 if(isMobileDataEnabled){
 
-                    MyApplication.getMainThreadHandler().post(new Runnable() {
+                    ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(context,"数据已关闭",Toast.LENGTH_SHORT).show();
@@ -1151,7 +1151,7 @@ public class FloatingBallUtils {
 
                 }else {
 
-                    MyApplication.getMainThreadHandler().post(new Runnable() {
+                    ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(context,"数据已开启",Toast.LENGTH_SHORT).show();
@@ -1182,7 +1182,7 @@ public class FloatingBallUtils {
 
         if (isWifiEnabled) {
 
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(context, "WIFI已关闭", Toast.LENGTH_SHORT).show();
@@ -1191,7 +1191,7 @@ public class FloatingBallUtils {
 
         } else {
 
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(context, "WIFI已开启", Toast.LENGTH_SHORT).show();
@@ -1229,7 +1229,7 @@ public class FloatingBallUtils {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
 
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(context,"屏幕旋转需要修改系统设置权限！",Toast.LENGTH_SHORT).show();
@@ -1261,7 +1261,7 @@ public class FloatingBallUtils {
 
             wakeLock.acquire();
 
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(context,"屏幕常亮已开启！",Toast.LENGTH_SHORT).show();
@@ -1272,7 +1272,7 @@ public class FloatingBallUtils {
         }else {
 
             wakeLock.release();
-            MyApplication.getMainThreadHandler().post(new Runnable() {
+            ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(context,"屏幕常亮已关闭！",Toast.LENGTH_SHORT).show();

@@ -353,7 +353,7 @@ public class SettingActivity extends AppCompatActivity {
 
             }
         });
-        mAlertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "退出", new DialogInterface.OnClickListener() {
+        mAlertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "算了", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

@@ -30,6 +30,7 @@ import com.hardwork.fg607.relaxfinger.utils.DensityUtil;
 import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
 import com.hardwork.fg607.relaxfinger.utils.ImageUtils;
 import com.hardwork.fg607.relaxfinger.utils.LogUtil;
+import com.hardwork.fg607.relaxfinger.utils.ThreadUtil;
 import com.ogaclejapan.arclayout.ArcLayout;
 
 import net.grandcentrix.tray.AppPreferences;
@@ -222,7 +223,7 @@ public class MenuViewProxy implements View.OnClickListener {
             public void onAnimationEnd(Animation animation) {
                 mScaleSpring.removeListener(mSpringListener);
                 if (mMenuView.getParent() != null) {
-                    MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
+                    ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                         @Override
                         public void run() {
                             mWindowManager.removeViewImmediate(mMenuView);
@@ -270,7 +271,7 @@ public class MenuViewProxy implements View.OnClickListener {
 
                 if (mMenuView.getParent() != null) {
 
-                    MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
+                    ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                         @Override
                         public void run() {
                             mWindowManager.removeViewImmediate(mMenuView);

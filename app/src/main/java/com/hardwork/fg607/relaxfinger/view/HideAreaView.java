@@ -18,6 +18,7 @@ import com.hardwork.fg607.relaxfinger.MyApplication;
 import com.hardwork.fg607.relaxfinger.utils.DensityUtil;
 import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
 import com.hardwork.fg607.relaxfinger.utils.LogUtil;
+import com.hardwork.fg607.relaxfinger.utils.ThreadUtil;
 
 /**
  * Created by fg607 on 16-12-3.
@@ -72,7 +73,7 @@ public class HideAreaView extends TextView {
             public void onAnimationEnd(Animation animation) {
 
 
-                MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
+                ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                     @Override
                     public void run() {
                         FloatingBallUtils.getWindowManager().removeViewImmediate(mParentLayout);

@@ -34,39 +34,25 @@ public class AccessibilityUtil {
 
     public static boolean checkAccessibility() {
         int accessibilityEnabled = 0;
-        final String service = context.getPackageName() + "/" + NavAccessibilityService.class.getCanonicalName();
-        boolean accessibilityFound = false;
         try {
-            accessibilityEnabled = Settings.Secure.getInt(
-                    context.getApplicationContext().getContentResolver(),
+            accessibilityEnabled = Settings.Secure.getInt(context.getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
         } catch (Settings.SettingNotFoundException e) {
             Log.e("ACBU","Error finding setting, default accessibility to not found: "
                     + e.getMessage());
         }
 
-        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
-
         if (accessibilityEnabled == 1) {
-            String settingValue = Settings.Secure.getString(
-                    context.getApplicationContext().getContentResolver(),
+            String services = Settings.Secure.getString(context.getContentResolver(),
                     Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-            if (settingValue != null) {
-                TextUtils.SimpleStringSplitter splitter = mStringColonSplitter;
-                splitter.setString(settingValue);
-                while (splitter.hasNext()) {
-                    String accessabilityService = splitter.next();
-
-                    if (accessabilityService.equalsIgnoreCase(service)) {
-                        return true;
-                    }
-                }
+            if (services != null) {
+                return services.toLowerCase().contains(context.getPackageName().toLowerCase());
             }
         } else {
             Log.i("ACBU","***ACCESSIBILIY IS DISABLED***");
         }
 
-        return accessibilityFound;
+        return false;
     }
 
     /**

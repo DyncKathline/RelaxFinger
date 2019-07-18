@@ -162,6 +162,8 @@ public class FloatService extends Service{
                         stopAccessibilityService();
                         stopSelf();
 
+                    }else {
+                        startAccessibilityService();
                     }
                     break;
                 case Config.HIDE_BALL://屏幕截图隐藏悬浮球
@@ -214,6 +216,13 @@ public class FloatService extends Service{
         }
 
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void startAccessibilityService() {
+
+        Intent intent = new Intent();
+        intent.setClass(this, NavAccessibilityService.class);
+        startService(intent);
     }
 
     private void stopAccessibilityService() {

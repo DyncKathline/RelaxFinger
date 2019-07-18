@@ -22,6 +22,7 @@ import com.hardwork.fg607.relaxfinger.model.MenuDataSugar;
 import com.hardwork.fg607.relaxfinger.utils.DensityUtil;
 import com.hardwork.fg607.relaxfinger.utils.FloatingBallUtils;
 import com.hardwork.fg607.relaxfinger.utils.LogUtil;
+import com.hardwork.fg607.relaxfinger.utils.ThreadUtil;
 
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class FolderViewProxy {
 
                 if (mFolderView.getParent() != null) {
 
-                    MyApplication.getMainThreadHandler().postDelayed(new Runnable() {
+                    ThreadUtil.getInstance().postTaskInMain(new Runnable() {
                         @Override
                         public void run() {
                             FloatingBallUtils.getWindowManager().removeViewImmediate(mFolderView);
